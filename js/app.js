@@ -2,6 +2,12 @@ console.log('conexion exitosa');
 
 //IMPORTACIONES
  import { obtenerPaises } from "./api/countriesApi.js";
+ import {
+    mostrarCargando,
+    mostrarError,
+    renderPaises,
+    actualizarContador
+} from "./ui/ui.js";
  //estado de la aplicacion
   let paises = [];
 //REFERENCIAS DEL DOM
@@ -13,42 +19,40 @@ const resultsCount = document.querySelector(
     "#results-count"
 );
 
-  const initialMessage = document.querySelector(
-    "#initial-message"
-);
  
- /* =========================================
+/* =========================================
    INICIALIZACIÓN DE LA APLICACIÓN
 ========================================= */
 
-    async function init() {
+async function init() {
 
     console.log("Explorador de Viajes iniciado");
 
-    // Mostrar mensaje de carga
-    initialMessage.textContent = "🌎 Cargando destinos...";
+    // 1. Mostrar mensaje de carga
+    mostrarCargando(destinationsContainer);
 
-    // Obtener países desde la API
+    // 2. Obtener países desde la API
     paises = await obtenerPaises();
 
-    // Mostrar los países en consola
+    // 3. Mostrar los países en consola
     console.log("Países obtenidos:", paises);
 
-    // Actualizar el contador
-    resultsCount.textContent = `${paises.length} destinos`;
+    // 4. Comprobar si recibimos datos
+    if (paises.length === 0) {
 
-    // Verificar si recibimos países
-    if (paises.length > 0) {
+        mostrarError(destinationsContainer);
 
-        initialMessage.textContent =
-            `✅ Se obtuvieron ${paises.length} destinos correctamente.`;
+        actualizarContador(0, resultsCount);
 
-    } else {
-
-        initialMessage.textContent =
-            "⚠️ No fue posible cargar los destinos.";
-
+        return;
     }
+
+    // 5. Crear las tarjetas de los países
+    renderPaises(paises, destinationsContainer);
+
+    // 6. Actualizar el contador
+    actualizarContador(paises.length, resultsCount);
 }
+
  
   init();

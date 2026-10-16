@@ -8,6 +8,8 @@ console.log('conexion exitosa');
     renderPaises,
     actualizarContador
 } from "./ui/ui.js";
+ import { procesarPaises } from "./utils/filters.js";   
+
  //estado de la aplicacion
   let paises = [];
 //REFERENCIAS DEL DOM
@@ -18,6 +20,29 @@ const destinationsContainer = document.querySelector(
 const resultsCount = document.querySelector(
     "#results-count"
 );
+const searchInput = document.querySelector('#search-input');
+const continentFilter = document.querySelector('#continent-filter');
+const sortFilter = document.querySelector('#sort-filter');
+
+function aplicarFiltros() {
+    const texto = searchInput.value;
+    //VALOR CONTINENTE
+    const continente = continentFilter.value;
+    //VALOR ORDENAMIENTO
+    const criterioOrden = sortFilter.value;
+    const resultados = procesarPaises(paises, texto, continente, criterioOrden);
+    renderPaises(resultados, destinationsContainer);
+    actualizarContador(resultados.length, resultsCount);
+}
+
+
+//REGISTRAR EVENTOS
+function registrarEventos() {
+    searchInput.addEventListener('input', aplicarFiltros);
+    continentFilter.addEventListener('change', aplicarFiltros);
+    sortFilter.addEventListener('change', aplicarFiltros);
+
+}
 
  
 /* =========================================
@@ -47,12 +72,12 @@ async function init() {
         return;
     }
 
-    // 5. Crear las tarjetas de los países
-    renderPaises(paises, destinationsContainer);
+    aplicarFiltros();
+    
 
-    // 6. Actualizar el contador
-    actualizarContador(paises.length, resultsCount);
+    registrarEventos();
+    
 }
 
- 
+ //INICIAR LA APLICACION
   init();

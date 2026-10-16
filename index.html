@@ -18,6 +18,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <!-- =========================================
+     LEAFLET CSS
+========================================= -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+>
+<!-- =========================================
+     LEAFLET JAVASCRIPT
+========================================= -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+></script>
+
 </head>
 
 
@@ -119,6 +139,7 @@
     ========================================== -->
 
     <main class="max-w-7xl mx-auto px-6 py-10">
+         
 
 
         <!-- =========================================
@@ -437,6 +458,38 @@
         </section>
 
     </main>
+ 
+
+<!-- =========================================
+     MODAL DE DETALLE
+========================================= -->
+
+<div
+    id="detail-modal"
+    class="
+        hidden
+        fixed
+        inset-0
+        z-50
+        bg-slate-900/70
+        p-4
+        overflow-y-auto
+    "
+>
+
+    <!-- CONTENIDO DEL MODAL -->
+    <div
+        id="detail-modal-content"
+        class="
+            max-w-4xl
+            mx-auto
+            my-8
+        "
+    >
+        <!-- El contenido será generado con JavaScript -->
+    </div>
+
+</div>
 
 
     <!-- =========================================

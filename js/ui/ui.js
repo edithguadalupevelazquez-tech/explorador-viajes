@@ -211,6 +211,292 @@ return `
 `;
 
     }).join("");
+    
 
+    // Mostrar las tarjetas en la página
     contenedor.innerHTML = tarjetas;
 }
+
+/* =========================================
+   MOSTRAR DETALLE DEL DESTINO
+========================================= */
+
+export function mostrarDetalle(
+    pais,
+    modal,
+    modalContent
+) {
+
+    // NOMBRE DEL PAÍS
+    const nombre =
+        pais.names?.common ?? "Nombre no disponible";
+
+    // NOMBRE OFICIAL
+    const nombreOficial =
+        pais.names?.official ?? "No disponible";
+
+    // REGIÓN
+    const region =
+        pais.region ?? "No disponible";
+
+    // SUBREGIÓN
+    const subregion =
+        pais.subregion ?? "No disponible";
+
+    // POBLACIÓN
+    const poblacion =
+        pais.population ?? 0;
+
+    // BANDERA
+    const bandera =
+        pais.flag?.url_png ?? "";
+
+    // CÓDIGO DEL PAÍS
+    const codigo =
+        pais.codes?.alpha_3 ?? "";
+
+    // CAPITAL
+    const capital =
+        pais.capitals?.[0]?.name ?? "No disponible";
+
+    /* =========================================
+   COORDENADAS DEL PAÍS
+========================================= */
+
+ const latitud =
+    pais.coordinates?.lat;
+
+ const longitud =
+    pais.coordinates?.lng;
+/* =========================================
+   FORMATEAR POBLACIÓN
+========================================= */
+
+ const poblacionFormateada =
+    poblacion.toLocaleString("es-MX");
+
+
+   
+    /* =========================================
+       CREAR CONTENIDO DEL MODAL
+    ========================================= */
+
+    modalContent.innerHTML = `
+        <article class="
+            bg-white
+            rounded-2xl
+            overflow-hidden
+            shadow-2xl
+        ">
+
+            <!-- CABECERA DEL MODAL -->
+            <div class="
+                flex
+                items-center
+                justify-between
+                gap-4
+                p-6
+                border-b
+                border-slate-200
+            ">
+
+                <div>
+                    <p class="
+                        text-sm
+                        text-blue-600
+                        font-medium
+                    ">
+                        ${codigo}
+                    </p>
+
+                    <h2 class="
+                        text-2xl
+                        md:text-3xl
+                        font-bold
+                        text-slate-900
+                    ">
+                        ${nombre}
+                    </h2>
+                </div>
+
+                <button
+                    id="btn-close-detail"
+                    type="button"
+                    aria-label="Cerrar detalle"
+                    class="
+                        w-10
+                        h-10
+                        flex
+                        items-center
+                        justify-center
+                        rounded-full
+                        bg-slate-100
+                        text-slate-600
+                        text-xl
+                        cursor-pointer
+                        hover:bg-slate-200
+                    "
+                >
+                    ×
+                </button>
+
+            </div>
+
+<!-- =========================================
+     BANDERA DEL PAÍS
+========================================= -->
+
+<div class="
+    h-64
+    md:h-80
+    bg-slate-100
+    overflow-hidden
+">
+
+    <img
+        src="${bandera}"
+        alt="Bandera de ${nombre}"
+        class="
+            w-full
+            h-full
+            object-cover
+        "
+    >
+
+</div>
+
+ 
+<!-- =========================================
+     INFORMACIÓN DEL PAÍS
+========================================= -->
+
+<div class="p-6">
+
+    <div class="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        lg:grid-cols-3
+        gap-4
+        mb-8
+    ">
+
+        <!-- CAPITAL -->
+        <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-xs text-slate-500">
+                Capital
+            </p>
+
+            <p class="font-semibold text-slate-900">
+                ${capital}
+            </p>
+        </div>
+
+        <!-- REGIÓN -->
+        <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-xs text-slate-500">
+                Región
+            </p>
+
+            <p class="font-semibold text-slate-900">
+                ${region}
+            </p>
+        </div>
+
+        <!-- SUBREGIÓN -->
+        <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-xs text-slate-500">
+                Subregión
+            </p>
+
+            <p class="font-semibold text-slate-900">
+                ${subregion}
+            </p>
+        </div>
+
+        <!-- POBLACIÓN -->
+        <div class="bg-slate-50 rounded-xl p-4">
+            <p class="text-xs text-slate-500">
+                Población
+            </p>
+
+            <p class="font-semibold text-slate-900">
+                ${poblacionFormateada}
+            </p>
+        </div>
+
+        <!-- NOMBRE OFICIAL -->
+        <div class="
+            bg-slate-50
+            rounded-xl
+            p-4
+            sm:col-span-2
+        ">
+            <p class="text-xs text-slate-500">
+                Nombre oficial
+            </p>
+
+            <p class="font-semibold text-slate-900">
+                ${nombreOficial}
+            </p>
+        </div> 
+        <!-- CERRAR CUADRÍCULA DE INFORMACIÓN -->
+</div>
+
+<!-- =========================================
+     MAPA DEL DESTINO
+========================================= -->
+
+<div>
+ 
+
+
+    <div class="mb-3">
+        <h3 class="
+            text-xl
+            font-bold
+            text-slate-900
+        ">
+            Ubicación
+        </h3>
+
+        <p class="text-sm text-slate-500">
+            Centro geográfico aproximado del país.
+        </p>
+    </div>
+
+    
+    <div
+        id="destination-map"
+        class="
+            w-full
+            h-80
+            rounded-xl
+            overflow-hidden
+            border
+            border-slate-200
+        "
+    ></div>
+
+    <!-- Cerrar sección del mapa -->
+</div>
+
+<!-- Cerrar bloque principal p-6 -->
+</div>
+
+<!-- Cerrar artículo del modal -->
+</article>
+`;
+// Mostrar el modal
+modal.classList.remove("hidden");
+
+// Devolver los datos para crear el mapa
+return {
+    latitud,
+    longitud,
+    nombre
+};
+
+}
+
+

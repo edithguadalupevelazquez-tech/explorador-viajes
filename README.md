@@ -28,13 +28,16 @@ El proyecto permitirá:
 
 La aplicación utiliza una sola página HTML y divide progresivamente la lógica JavaScript en módulos según su responsabilidad.
 
+
 ## Versión actual
 
-v0.3.0 - Renderizado dinámico de destinos mediante JavaScript,
-map(), template literals, innerHTML y módulos de interfaz.
+v0.5.0 - Implementación de detalles de países y mapas interactivos con Leaflet.
 
 ## Historial de versiones
 
 - v0.1.0 - Estructura inicial con Tailwind CSS.
 - v0.2.0 - Integración con API REST y obtención de países.
-- v0.3.0 - Tarjetas dinámicas con banderas, población y botones.
+- v0.3.0 - Renderizado dinámico de destinos.
+- v0.4.0 - Búsqueda, filtros y ordenamiento.
+- v0.5.0 - Modal de detalle, mapas interactivos con Leaflet y cierre mediante botón, Escape y fondo oscuro.
+

@@ -1,6 +1,7 @@
 # Explorador de Viajes y Lugares Turísticos
 
 Proyecto integrador desarrollado con JavaScript puro, APIs y librerías para explorar información de países y destinos alrededor del mundo.
+
 ## Tecnologías
 
 - HTML5
@@ -12,6 +13,7 @@ Proyecto integrador desarrollado con JavaScript puro, APIs y librerías para exp
 - SweetAlert2
 - Git
 - GitHub
+
 ## Características
 
 El proyecto permitirá:
@@ -24,14 +26,14 @@ El proyecto permitirá:
 - Visualizar la ubicación del destino en un mapa.
 - Guardar destinos favoritos.
 - Persistir favoritos mediante LocalStorage.
+
 ## Arquitectura
 
 La aplicación utiliza una sola página HTML y divide progresivamente la lógica JavaScript en módulos según su responsabilidad.
 
-
 ## Versión actual
 
-v0.5.0 - Implementación de detalles de países y mapas interactivos con Leaflet.
+v0.6.0 - Implementación de favoritos persistentes con LocalStorage y notificaciones con SweetAlert2.
 
 ## Historial de versiones
 
@@ -39,5 +41,5 @@ v0.5.0 - Implementación de detalles de países y mapas interactivos con Leaflet
 - v0.2.0 - Integración con API REST y obtención de países.
 - v0.3.0 - Renderizado dinámico de destinos.
 - v0.4.0 - Búsqueda, filtros y ordenamiento.
-- v0.5.0 - Modal de detalle, mapas interactivos con Leaflet y cierre mediante botón, Escape y fondo oscuro.
-
+- v0.5.0 - Modal de detalle y mapas interactivos con Leaflet.
+- v0.6.0 - Guardar y eliminar favoritos con LocalStorage, confirmaciones con SweetAlert2 y persistencia de datos.

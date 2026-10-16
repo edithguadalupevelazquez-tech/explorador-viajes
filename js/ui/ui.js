@@ -1,4 +1,3 @@
-
 /* =========================================
    INTERFAZ DE USUARIO
    Funciones encargadas de actualizar el DOM
@@ -9,8 +8,7 @@
 ========================================= */
 
 export function mostrarCargando(contenedor) {
-
-    contenedor.innerHTML = `
+  contenedor.innerHTML = `
         <div class="
             col-span-full
             bg-white
@@ -48,8 +46,7 @@ export function mostrarCargando(contenedor) {
 ========================================= */
 
 export function mostrarError(contenedor) {
-
-    contenedor.innerHTML = `
+  contenedor.innerHTML = `
         <div class="
             col-span-full
             bg-red-50
@@ -82,44 +79,117 @@ export function mostrarError(contenedor) {
     `;
 }
 /* =========================================
+   MOSTRAR FAVORITOS VACÍOS
+========================================= */
+
+export function mostrarFavoritosVacios(contenedor) {
+  contenedor.innerHTML = `
+        <div class="
+            col-span-full
+            bg-white
+            border
+            border-dashed
+            border-slate-300
+            rounded-xl
+            p-12
+            text-center
+        ">
+
+            <div class="text-5xl mb-4">
+                ♡
+            </div>
+
+            <h3 class="
+                text-xl
+                font-semibold
+                text-slate-800
+                mb-2
+            ">
+                No tienes destinos favoritos
+            </h3>
+
+            <p class="text-slate-500">
+                Explora los destinos y guarda
+                los que más te interesen.
+            </p>
+
+        </div>
+    `;
+}
+
+/* =========================================
    ACTUALIZAR CONTADOR
 ========================================= */
 
 export function actualizarContador(total, elementoContador) {
-
-    elementoContador.textContent = `${total} destinos`;
-
+  elementoContador.textContent = `${total} destinos`;
 }
 /* =========================================
    RENDERIZAR DESTINOS
 ========================================= */
 
-export function renderPaises(paises, contenedor) {
+export function renderPaises(paises, contenedor, modo = "explorar") {
+  const tarjetas = paises
+    .map((pais) => {
+      const nombre = pais.names?.common ?? "Nombre no disponible";
 
-    const tarjetas = paises.map((pais) => {
+      const region = pais.region ?? "Región no disponible";
 
-        const nombre =
-            pais.names?.common ?? "Nombre no disponible";
+      const poblacion = pais.population ?? 0;
 
-        const region =
-            pais.region ?? "Región no disponible";
+      const poblacionFormateada = poblacion.toLocaleString("es-MX");
 
-        const poblacion =
-            pais.population ?? 0;
-        
-        const poblacionFormateada =
-           poblacion.toLocaleString("es-MX");
+      const bandera = pais.flag?.url_png ?? "";
 
-        const bandera =
-            pais.flag?.url_png ?? "";
+      const codigo = pais.codes?.alpha_3 ?? "";
 
-        const codigo =
-            pais.codes?.alpha_3 ?? "";
+      /* =========================================
+   BOTÓN DINÁMICO DE FAVORITOS
+========================================= */
 
-        console.log(nombre, region, poblacion, bandera, codigo);
+      const botonFavorito =
+        modo === "favoritos"
+          ? `
+            <button
+                type="button"
+                data-action="remove-favorite"
+                data-country-code="${codigo}"
+                class="
+                    px-4 py-2
+                    border border-red-300
+                    text-red-600
+                    rounded-lg
+                    cursor-pointer
+                    hover:bg-red-50
+                    transition
+                "
+            >
+                ♥ Eliminar
+            </button>
+        `
+          : `
+            <button
+                type="button"
+                data-action="favorite"
+                data-country-code="${codigo}"
+                aria-label="Agregar ${nombre} a favoritos"
+                class="
+                    px-4 py-2
+                    border border-slate-300
+                    text-slate-600
+                    rounded-lg
+                    cursor-pointer
+                    hover:bg-slate-100
+                    transition
+                "
+            >
+                ♡
+            </button>
+        `;
 
-      
-return `
+      console.log(nombre, region, poblacion, bandera, codigo);
+
+      return `
     <article class="
         bg-white rounded-xl border border-slate-200
         overflow-hidden shadow-sm hover:shadow-md transition
@@ -189,99 +259,68 @@ return `
                     Ver más
                 </button>
 
-                <button
-                    type="button"
-                    data-action="favorite"
-                    data-country-code="${codigo}"
-                    aria-label="Agregar ${nombre} a favoritos"
-                    class="
-                        px-4 py-2 border border-slate-300
-                        text-slate-600 rounded-lg
-                        hover:bg-slate-100 transition
-                    "
-                >
-                    ♡
-                </button>
-
+     
+${botonFavorito}
             </div>
 
         </div>
 
      </article>
 `;
+    })
+    .join("");
 
-    }).join("");
-    
-
-    // Mostrar las tarjetas en la página
-    contenedor.innerHTML = tarjetas;
+  // Mostrar las tarjetas en la página
+  contenedor.innerHTML = tarjetas;
 }
 
 /* =========================================
    MOSTRAR DETALLE DEL DESTINO
 ========================================= */
 
-export function mostrarDetalle(
-    pais,
-    modal,
-    modalContent
-) {
+export function mostrarDetalle(pais, modal, modalContent) {
+  // NOMBRE DEL PAÍS
+  const nombre = pais.names?.common ?? "Nombre no disponible";
 
-    // NOMBRE DEL PAÍS
-    const nombre =
-        pais.names?.common ?? "Nombre no disponible";
+  // NOMBRE OFICIAL
+  const nombreOficial = pais.names?.official ?? "No disponible";
 
-    // NOMBRE OFICIAL
-    const nombreOficial =
-        pais.names?.official ?? "No disponible";
+  // REGIÓN
+  const region = pais.region ?? "No disponible";
 
-    // REGIÓN
-    const region =
-        pais.region ?? "No disponible";
+  // SUBREGIÓN
+  const subregion = pais.subregion ?? "No disponible";
 
-    // SUBREGIÓN
-    const subregion =
-        pais.subregion ?? "No disponible";
+  // POBLACIÓN
+  const poblacion = pais.population ?? 0;
 
-    // POBLACIÓN
-    const poblacion =
-        pais.population ?? 0;
+  // BANDERA
+  const bandera = pais.flag?.url_png ?? "";
 
-    // BANDERA
-    const bandera =
-        pais.flag?.url_png ?? "";
+  // CÓDIGO DEL PAÍS
+  const codigo = pais.codes?.alpha_3 ?? "";
 
-    // CÓDIGO DEL PAÍS
-    const codigo =
-        pais.codes?.alpha_3 ?? "";
+  // CAPITAL
+  const capital = pais.capitals?.[0]?.name ?? "No disponible";
 
-    // CAPITAL
-    const capital =
-        pais.capitals?.[0]?.name ?? "No disponible";
-
-    /* =========================================
+  /* =========================================
    COORDENADAS DEL PAÍS
 ========================================= */
 
- const latitud =
-    pais.coordinates?.lat;
+  const latitud = pais.coordinates?.lat;
 
- const longitud =
-    pais.coordinates?.lng;
-/* =========================================
+  const longitud = pais.coordinates?.lng;
+  /* =========================================
    FORMATEAR POBLACIÓN
 ========================================= */
 
- const poblacionFormateada =
-    poblacion.toLocaleString("es-MX");
+  const poblacionFormateada = poblacion.toLocaleString("es-MX");
 
-
-   
-    /* =========================================
+  /* =========================================
        CREAR CONTENIDO DEL MODAL
     ========================================= */
 
-    modalContent.innerHTML = `
+  modalContent.innerHTML = `
         <article class="
             bg-white
             rounded-2xl
@@ -487,16 +526,13 @@ export function mostrarDetalle(
 <!-- Cerrar artículo del modal -->
 </article>
 `;
-// Mostrar el modal
-modal.classList.remove("hidden");
+  // Mostrar el modal
+  modal.classList.remove("hidden");
 
-// Devolver los datos para crear el mapa
-return {
+  // Devolver los datos para crear el mapa
+  return {
     latitud,
     longitud,
-    nombre
-};
-
+    nombre,
+  };
 }
-
-
